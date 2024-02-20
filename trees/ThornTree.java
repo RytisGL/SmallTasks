@@ -1,6 +1,6 @@
 package trees;
 
-public abstract class Conifer implements Tree {
+public abstract class ThornTree implements Tree {
     public String getBranchTypeString() {
         return "has spikes";
     }

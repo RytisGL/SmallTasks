@@ -8,7 +8,7 @@ public class Task2 {
         List<Tree> list1 = new ArrayList<>();
         list1.add(new BirchTree());
         list1.add(new PineTree());
-        List<Conifer> list2 = new ArrayList<>();
+        List<ThornTree> list2 = new ArrayList<>();
         list2.add(new PineTree());
         list2.add(new FirTree());
         List<BirchTree> list3 = new ArrayList<>();
@@ -25,9 +25,9 @@ public class Task2 {
         }
     }
 
-    public static void coniferForest(List<? extends Conifer> l) {
+    public static void coniferForest(List<? extends ThornTree> l) {
         System.out.println("It is a conifer forest");
-        for (Conifer c : l) {
+        for (ThornTree c : l) {
             c.have();
         }
     }
