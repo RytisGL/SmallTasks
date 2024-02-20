@@ -1,5 +1,5 @@
 
-public class Main {
+public class Task1 {
     public static void main(String[] args) {
         String[] stringL = {"String"};
         Integer[] integerList = {1};
