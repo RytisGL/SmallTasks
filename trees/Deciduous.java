@@ -1,8 +1,8 @@
 package trees;
 
-public abstract class Deciduous implements Tree {
-    //Lapuotis? o.O
-    public String getBranchTypeString() {
-        return "has leafs";
+public class Deciduous implements Tree {
+    @Override
+    public void have() {
+        System.out.println(this + "has leafs.");
     }
 }

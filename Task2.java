@@ -13,29 +13,8 @@ public class Task2 {
         list2.add(new FirTree());
         List<BirchTree> list3 = new ArrayList<>();
         list3.add(new BirchTree());
-        variousForest(list1);
-        coniferForest(list2);
-        birchTreeForest(list3);
-    }
-
-    public static void variousForest(List<? extends Tree> l) {
-        System.out.println("It is a various forest");
-        for (Tree t : l) {
-            t.have();
-        }
-    }
-
-    public static void coniferForest(List<? extends ThornTree> l) {
-        System.out.println("It is a conifer forest");
-        for (ThornTree c : l) {
-            c.have();
-        }
-    }
-
-    public static void birchTreeForest(List<BirchTree> l) {
-        System.out.println("It is birch tree forest");
-        for (BirchTree b : l) {
-            b.have();
-        }
+        Tree.variousForest(list1);
+        ThornTree.thornTreeForest(list2);
+        BirchTree.birchTreeForest(list3);
     }
 }
