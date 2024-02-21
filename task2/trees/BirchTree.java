@@ -1,4 +1,4 @@
-package trees;
+package task2.trees;
 
 import java.util.List;
 

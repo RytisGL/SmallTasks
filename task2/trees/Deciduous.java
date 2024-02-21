@@ -1,4 +1,4 @@
-package trees;
+package task2.trees;
 
 public class Deciduous implements Tree {
     @Override

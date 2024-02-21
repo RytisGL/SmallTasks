@@ -1,4 +1,6 @@
-import trees.*;
+package task2.trees;
+
+import task2.trees.*;
 
 import java.util.ArrayList;
 import java.util.List;
