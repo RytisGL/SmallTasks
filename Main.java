@@ -1,9 +1,9 @@
 public class Main {
     public static void main(String[] args) {
         String[] strings = {"String"};
-        Integer[] integers = {1};
+        Integer[] lists = {1};
         printList(strings);
-        printList(integers);
+        printList(lists);
     }
 
     public static <T> void printList(T[] l) {
