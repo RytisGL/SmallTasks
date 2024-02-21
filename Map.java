@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Map {
-    private List<Pair> pairList = new ArrayList<>();
+public class Map<K, V> {
+    private List<Pair<K, V>> pairList = new ArrayList<>();
 
-    public <K, V> void add(K key, V value) {
-        Pair<K, V> pair = new Pair(key, value);
+    public void add(K key, V value) {
+        Pair<K, V> pair = new Pair<>(key, value);
         this.pairList.add(pair);
     }
 
-    public <K> String get(K key) {
-        for (Pair pair : pairList) {
+    public String get(K key) {
+        for (Pair<K, V> pair : pairList) {
             if (pair.getKey().equals(key)) {
                 return pair.getValue().toString();
             }
