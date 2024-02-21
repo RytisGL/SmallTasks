@@ -14,11 +14,8 @@ public class ListOfNumbers {
         double result = 0;
         for (int i = 0; i < list.size(); i++) {
             result += list.get(i);
-            if ((i + 1) == list.size()) {
-                result = result / i;
-            }
         }
-        return result;
+        return result / list.size();
     }
 
     @Override
