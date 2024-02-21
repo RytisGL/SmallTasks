@@ -1,4 +1,4 @@
-package task2.trees;
+package task2;
 
 import task2.trees.*;
 
