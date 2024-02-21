@@ -11,13 +11,14 @@ public class ListOfNumbers {
     }
 
     public double getAverage() {
-        int count = 0;
         double result = 0;
-        for (double d : list) {
-            result += d;
-            count++;
+        for (int i = 0; i < list.size(); i++) {
+            result += list.get(i);
+            if ((i + 1) == list.size()) {
+                result = result / i;
+            }
         }
-        return result / count;
+        return result;
     }
 
     @Override
