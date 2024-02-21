@@ -1,10 +1,10 @@
 
 public class Main {
     public static void main(String[] args) {
-        String[] stringL = {"String"};
-        Integer[] integerList = {1};
-        printList(stringL);
-        printList(integerList);
+        String[] strings = {"String"};
+        Integer[] lists = {1};
+        printList(strings);
+        printList(lists);
     }
 
     public static <T> void printList(T[] l) {
