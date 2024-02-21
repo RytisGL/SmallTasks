@@ -29,7 +29,7 @@ public class ListOfNumbers {
                 result.append(", ");
             }
         }
-        result.append("]");
+        result.append("]}");
         return String.valueOf(result);
     }
 }
