@@ -9,10 +9,10 @@ public class Map<K, V> {
         this.pairList.add(pair);
     }
 
-    public String get(K key) {
+    public V get(Object key) {
         for (Pair<K, V> pair : pairList) {
             if (pair.getKey().equals(key)) {
-                return pair.getValue().toString();
+                return pair.getValue();
             }
         }
         return null;
