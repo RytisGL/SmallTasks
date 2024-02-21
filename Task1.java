@@ -1,9 +1,9 @@
-public class Main {
+public class Task1 {
     public static void main(String[] args) {
         String[] strings = {"String"};
-        Integer[] lists = {1};
+        Integer[] integers = {1};
         printList(strings);
-        printList(lists);
+        printList(integers);
     }
 
     public static <T> void printList(T[] l) {
