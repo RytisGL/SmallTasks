@@ -9,17 +9,16 @@ public class Solution {
     public static int solution(int[] a) {
         int check = 1;
         HashSet<Integer> removeDup = new HashSet<>();
-        List<Integer> sort = new ArrayList<>();
         for (int num: a) {
             removeDup.add(num);
         }
-        sort.addAll(removeDup);
+        List<Integer> sort = new ArrayList<>(removeDup);
         Collections.sort(sort);
-        for (int i = 0; i < sort.size(); i++) {
-            if (sort.get(i) >= 1 && sort.get(i) != check) {
+        for (Integer integer : sort) {
+            if (integer >= 1 && integer != check) {
                 return check;
             }
-            if (sort.get(i) < 1) {
+            if (integer < 1) {
                 check = 1;
             } else {
                 check++;
