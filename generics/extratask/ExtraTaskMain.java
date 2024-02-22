@@ -1,4 +1,4 @@
-package extratask;
+package generics.extratask;
 
 public class ExtraTaskMain {
     public static void main(String[] args) {

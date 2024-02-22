@@ -1,4 +1,4 @@
-package task3;
+package generics.task3;
 
 import java.util.ArrayList;
 import java.util.List;

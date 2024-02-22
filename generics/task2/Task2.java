@@ -1,6 +1,7 @@
-package task2;
+package generics.task2;
 
-import task2.trees.*;
+import generics.task1.task2.trees.*;
+import generics.task2.trees.*;
 
 import java.util.ArrayList;
 import java.util.List;

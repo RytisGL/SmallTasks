@@ -1,4 +1,4 @@
-package task5;
+package generics.task5;
 
 public class SuperPair<K, V, N extends Number> {
     K key;
