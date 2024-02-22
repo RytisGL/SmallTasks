@@ -1,4 +1,4 @@
-package Task4;
+package task4;
 
 import java.util.ArrayList;
 import java.util.List;
