@@ -1,4 +1,4 @@
-package Task5;
+package task5;
 
 public class SuperPair<K, V, N extends Number> {
     K key;
