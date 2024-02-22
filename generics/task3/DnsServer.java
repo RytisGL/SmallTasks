@@ -1,4 +1,4 @@
-package task3;
+package generics.task3;
 
 public class DnsServer {
     private int ip1 = 1234;
@@ -6,7 +6,7 @@ public class DnsServer {
 
     @Override
     public String toString() {
-        return "task4.DnsServer{" +
+        return "generics.task4.DnsServer{" +
                 "ip1=" + ip1 +
                 ", ip2=" + ip2 +
                 '}';

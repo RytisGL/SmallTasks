@@ -1,4 +1,4 @@
-package task3;
+package generics.task3;
 
 public class Pair<K, V> {
     private K key;

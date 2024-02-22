@@ -1,6 +1,4 @@
-package task5;
-
-import java.util.*;
+package generics.task5;
 
 public class Task5 {
     public static void main(String[] args) {

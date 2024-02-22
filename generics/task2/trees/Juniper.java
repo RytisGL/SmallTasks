@@ -1,4 +1,4 @@
-package task2.trees;
+package generics.task2.trees;
 
 public class Juniper extends ThornTree {
     @Override
