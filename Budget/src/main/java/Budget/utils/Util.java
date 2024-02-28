@@ -31,7 +31,7 @@ public abstract class Util {
         //Sonaras sakė tai daryt
     }
 
-    public static void csvToJsonWhichYouCantUseAnywhereAnyway() {
+    public static void csvToJson() {
         File input = new File(DATA);
         File output = new File("src/main/java/Budget/files/dataJson2.json");
 
