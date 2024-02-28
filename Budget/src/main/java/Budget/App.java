@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        Util.csvToJsonWhichYouCantUseAnywhereAnyway();
         Budget budget = Util.loadData();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
