@@ -6,13 +6,18 @@ import Budget.budgetobjects.Expense;
 import Budget.budgetobjects.Income;
 import Budget.exceptions.WrongInputException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -25,6 +30,33 @@ public abstract class Util {
     private Util() {
         //Sonaras sakė tai daryt
     }
+
+    public static void csvToJson() {
+        File input = new File(DATA);
+        File output = new File("src/main/java/Budget/files/dataJson2.json");
+
+        List<Map<?, ?>> data = null;
+        try {
+            data = readObjectsFromCsv(input);
+            writeAsJson(data, output);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<Map<?, ?>> readObjectsFromCsv(File file) throws IOException {
+        CsvSchema bootstrap = CsvSchema.emptySchema().withHeader();
+        CsvMapper csvMapper = new CsvMapper();
+        try (MappingIterator<Map<?, ?>> mappingIterator = csvMapper.readerFor(Map.class).with(bootstrap).readValues(file)) {
+            return mappingIterator.readAll();
+        }
+    }
+
+    public static void writeAsJson(List<Map<?, ?>> data, File file) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(file, data);
+    }
+
     public static void saveData(ArrayList<BudgetRecord> list) {
         ObjectMapper om = new ObjectMapper();
         om.registerModule(new JavaTimeModule());
@@ -63,7 +95,8 @@ public abstract class Util {
             ObjectMapper om = new ObjectMapper();
             om.registerModule(new JavaTimeModule());
             try {
-                ArrayList<BudgetRecord> list = om.readValue(new FileReader(JSONDATA), new TypeReference<>() {});
+                ArrayList<BudgetRecord> list = om.readValue(new FileReader(JSONDATA), new TypeReference<>() {
+                });
                 budgetJson.setBudgetArray(list);
             } catch (Exception e) {
                 throw new RuntimeException(e);
