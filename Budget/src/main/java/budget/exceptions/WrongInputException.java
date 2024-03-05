@@ -1,4 +1,4 @@
-package Budget.exceptions;
+package budget.exceptions;
 
 public class WrongInputException extends Exception {
     public WrongInputException(String message) {

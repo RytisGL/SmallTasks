@@ -1,4 +1,6 @@
-package Budget.enums;
+package budget.enums;
+
+import java.util.EnumSet;
 
 public enum Commands {
     N("-> Enter data", Category.MENU),
@@ -11,7 +13,11 @@ public enum Commands {
     W("-> Remove income data", Category.REMOVE),
     C("-> Check balance", Category.MENU),
     A("-> Print all", Category.PRINT),
-    X("-> Close.", Category.MENU);
+    X("-> Close.", Category.MENU),
+    J("-> Save to Json file", Category.SAVE),
+    V("-> Save to CSV file", Category.SAVE),
+    U("-> Load from Json file", Category.LOAD),
+    O("-> Load from CSV file", Category.LOAD);
 
     private final String desc;
     private final Category category;
@@ -21,31 +27,10 @@ public enum Commands {
         this.category = category;
     }
 
-    public static void printMenu() {
-        for (Commands c : Commands.values()) {
-            if (c.category == Category.MENU) {
-                System.out.println(c + c.desc);
-            }
-
-        }
-    }
-
-    public static void printRemoveMenu() {
-        for (Commands c : Commands.values()) {
-            if (c.category == Category.REMOVE) {
-                System.out.println(c + c.desc);
-            }
-
-        }
-    }
-
-    public static void printPrintMenu() {
-        for (Commands c : Commands.values()) {
-            if (c.category == Category.PRINT) {
-                System.out.println(c + c.desc);
-            }
-
-        }
+    public static void printCommandsByCategory(Category category) {
+        EnumSet.allOf(Commands.class).stream()
+                .filter(command -> command.category == category)
+                .forEach(command -> System.out.println(command + command.desc));
     }
 
     public static Commands stringToCommand(String s) {

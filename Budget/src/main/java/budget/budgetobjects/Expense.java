@@ -1,29 +1,22 @@
-package Budget.budgetobjects;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package budget.budgetobjects;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class Expense extends BudgetRecord {
-    @JsonProperty("cardUsed")
     private String cardUsed;
+
     public Expense() {
     }
 
-    public Expense(Scanner scanner) {
-        super(scanner);
+    public Expense(int amount, String additionalInfo, String cardUsed) {
+        super(amount, additionalInfo);
         System.out.println("Enter card number for the expense: ");
-        this.cardUsed = scanner.nextLine();
+        this.cardUsed = cardUsed;
     }
 
     public Expense(int amount, int id, LocalDate date, String cardUsed, String additionalInfo) {
         super(amount, id, date, additionalInfo);
         this.cardUsed = cardUsed;
-    }
-
-    public void editCardUsed(Scanner scanner) {
-        this.setCardUsed(scanner.nextLine());
     }
 
     public void setCardUsed(String cardUsed) {
@@ -35,7 +28,7 @@ public class Expense extends BudgetRecord {
     }
 
     @Override
-    public String getStingForFile() {
+    public String getStringForCsvFile() {
         return String.valueOf(super.getAmount()) + ';' + super.getId() + ';' + super.getDate() + ';' + this.cardUsed + ';' + super.getAdditionalInfo() + ';';
     }
 
