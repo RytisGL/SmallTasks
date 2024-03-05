@@ -1,5 +1,6 @@
 package budget.budgetobjects;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,18 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BudgetRecordTest {
     private Income income;
-    private Scanner scanner;
 
     @BeforeEach
     void setUp() {
-        income = new Income(100, 1, LocalDate.parse("2024-03-01"), true, "Test");
-    }
-
-    @AfterEach
-    void tearDown() {
-        if (scanner != null) {
-            scanner.close();
-        }
+        income = new Income(100, 1, LocalDate.parse("2000-01-01"), true, "Test");
     }
 
     @Test
@@ -45,8 +38,8 @@ class BudgetRecordTest {
 
     @Test
     void testSetDate() {
-        income.setDate(LocalDate.parse("2024-03-01"));
-        assertEquals(LocalDate.parse("2024-03-01"), income.getDate());
+        income.setDate(LocalDate.parse("2000-01-01"));
+        assertEquals(LocalDate.parse("2000-01-01"), income.getDate());
     }
 
     @Test
@@ -57,7 +50,7 @@ class BudgetRecordTest {
 
     @Test
     void testCorrectDateSetInConstructor() {
-        assertEquals(LocalDate.parse("2024-03-01"), income.getDate());
+        assertEquals(LocalDate.parse("2000-01-01"), income.getDate());
     }
 
     @Test
@@ -66,14 +59,15 @@ class BudgetRecordTest {
     }
 
     @Test
-    void testNotEqualsById() {
+    void testEqualsById() {
+        Budget.id = 1;
         Income income1 = new Income(100, "test", true);
-        assertNotEquals(income, income1);
+        assertEquals(income, income1);
     }
 
     @Test
-    void testEqualsById() {
-        Budget.id++;
+    void testNotEqualsById() {
+        Budget.id = 2;
         Income income1 = new Income(100, "test", true);
         assertNotEquals(income, income1);
     }

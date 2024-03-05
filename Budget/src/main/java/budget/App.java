@@ -30,7 +30,7 @@ public class App {
                 case E -> budget.selectIdToEdit(scanner);
                 case R -> MenuUtil.removeMenu(scanner, budget);
                 case P -> MenuUtil.printDataMenu(scanner, budget);
-                case C -> Util.print(budget.getBalance());
+                case C -> System.out.println(budget.getBalance());
                 case X -> {
                     running = MenuUtil.closeApp(scanner, budget);
                     scanner.close();

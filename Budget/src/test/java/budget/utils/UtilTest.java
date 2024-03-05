@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +27,9 @@ class UtilTest {
     }
 
     @Test
-    void betterBooleanParse() {
+    void testBooleanParsThrowsRuntimeExWithWrongInput() {
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
-            Util.booleanParseRuntimeExIfFails("test");
+            Util.booleanParseRuntimeExIfFails("Wrong input");
         }, "RuntimeException was expected");
         assertEquals("Corrupt file, boolean parse failed", thrown.getMessage());
     }
@@ -45,13 +44,6 @@ class UtilTest {
         assertDoesNotThrow(() -> assertTrue(Util.booleanParseRuntimeExIfFails("True")));
     }
 
-    @Test
-    void testPrintToConsoleString() {
-        System.setOut(new PrintStream(baos));
-        Util.print("Test");
-        System.setOut(oldOut);
-        assertEquals("Test", baos.toString().trim());
-    }
     @Test
     void testPrintToConsoleArrayList() {
         System.setOut(new PrintStream(baos));

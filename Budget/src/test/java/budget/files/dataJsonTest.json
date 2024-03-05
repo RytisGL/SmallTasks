@@ -1,1 +1,0 @@
-[{"amount":100,"id":1,"additionalInfo":"Test","date":[2024,1,1],"moneyReceived":true,"stringForCsvFile":"100;1;2024-01-01;true;Test;"},{"amount":200,"id":2,"additionalInfo":"Test Additional Info","date":[2024,1,1],"cardUsed":"1234","stringForCsvFile":"200;2;2024-01-01;1234;Test Additional Info;"}]

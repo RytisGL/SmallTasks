@@ -13,7 +13,7 @@ class ExpenseTest {
 
     @BeforeEach
     void setUp() {
-        expense = new Expense(100, 1, LocalDate.parse("2024-01-01"), "1234", "Test Additional Info");
+        expense = new Expense(100, 1, LocalDate.parse("2000-01-01"), "1234", "Test Additional Info");
     }
 
     @Test
@@ -24,11 +24,11 @@ class ExpenseTest {
 
     @Test
     void testGetStringForCsvFileReturnCorrectFormat() {
-        assertEquals("100;1;" + LocalDate.parse("2024-01-01") + ";1234;Test Additional Info;", expense.getStringForCsvFile());
+        assertEquals("100;1;" + LocalDate.parse("2000-01-01") + ";1234;Test Additional Info;", expense.getStringForCsvFile());
     }
 
     @Test
     void testToStringReturnCorrectFormat() {
-        assertEquals("Expense{id=1, amount=100, date=" + LocalDate.parse("2024-01-01") + ", cardUsed='1234', additionalInfo='Test Additional Info'}", expense.toString());
+        assertEquals("Expense{id=1, amount=100, date=" + LocalDate.parse("2000-01-01") + ", cardUsed='1234', additionalInfo='Test Additional Info'}", expense.toString());
     }
 }

@@ -3,7 +3,6 @@ package budget.budgetobjects;
 import com.fasterxml.jackson.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)

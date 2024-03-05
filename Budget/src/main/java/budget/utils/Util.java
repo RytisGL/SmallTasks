@@ -22,11 +22,6 @@ public abstract class Util {
         }
     }
 
-    public static <T> void print(T print) {
-        System.out.println(print);
-    }
-
-
     public static void errorLog(Exception e) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
