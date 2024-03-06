@@ -4,8 +4,8 @@ import java.io.*;
 
 public class FileHandler {
     public static void main(String[] args) {
-        writeFile("src/main/java/SmallTasks/task4/MyFileCopy.txt", readFileLine("src/main/java/SmallTasks/task4/MyFile.txt"));
-        printFileInfo(new File("src/main/java/SmallTasks/task4/MyFileCopy.txt"));
+        writeFile("src/main/java/SmallTasks/task4/MyFileCopy.json", readFileLine("src/main/java/SmallTasks/task4/MyFile.json"));
+        printFileInfo(new File("src/main/java/SmallTasks/task4/MyFileCopy.json"));
     }
 
     public static void writeFile(String filePath, String text) {
