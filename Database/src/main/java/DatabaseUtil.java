@@ -1,4 +1,3 @@
-import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -25,7 +24,6 @@ public class DatabaseUtil {
         System.out.println(header);
         System.out.println("-".repeat(header.length()));
         while (rs.next()) {
-            //Create employee object instead add it to array and print them all out, made it too pretty to change it now!.
             System.out.printf("|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%n",
                     rs.getString("asmenskodas"),
                     rs.getString("vardas"),
@@ -37,6 +35,28 @@ public class DatabaseUtil {
                     rs.getString("projektas_id"));
             System.out.println("-".repeat(header.length()));
         }
+        rs.close();
+        st.close();
+    }
+    public ArrayList<Employee> getEmployeeArrayFromDatabase() throws SQLException {
+        Statement st = this.con.createStatement();
+        st.execute("SELECT * FROM darbuotojas");
+        ResultSet rs = st.getResultSet();
+        ArrayList<Employee> employeeArrayList = new ArrayList<>();
+        while (rs.next()) {
+                    Integer nationalId = rs.getInt("asmenskodas");
+                    String name = rs.getString("vardas");
+                    String lastname = rs.getString("pavarde");
+                    Date startingFrom = rs.getDate("dirbanuo");
+                    Date birthday = rs.getDate("gimimometai");
+                    String position = rs.getString("pareigos");
+                    String department = rs.getString("skyrius_pavadinimas");
+                    Integer projectId = rs.getInt("projektas_id");
+                    employeeArrayList.add(new Employee(nationalId,name,lastname,startingFrom,birthday,position,department,projectId));
+        }
+        rs.close();
+        st.close();
+        return employeeArrayList;
     }
 
     public void printProject() throws SQLException {
@@ -54,6 +74,8 @@ public class DatabaseUtil {
                     rs.getString("pavarde"));
             System.out.println("-".repeat(header.length()));
         }
+        rs.close();
+        st.close();
     }
 
 
@@ -84,10 +106,26 @@ public class DatabaseUtil {
         preparedStatement.setString(6, position);
         preparedStatement.setString(7, department);
         preparedStatement.executeUpdate();
+        preparedStatement.close();
+        System.out.println("Employee added successfully.");
+    }
+    public void addNewEmployeeFromEmployeeObject(Employee employee) throws SQLException {
+        String sql = "INSERT INTO darbuotojas (asmenskodas, vardas, pavarde, dirbanuo, gimimometai, pareigos, skyrius_pavadinimas) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement preparedStatement = this.con.prepareStatement(sql);
+        preparedStatement.setInt(1, employee.nationalId());
+        preparedStatement.setString(2, employee.name());
+        preparedStatement.setString(3, employee.lastname());
+        preparedStatement.setDate(4, employee.workingFrom());
+        preparedStatement.setDate(5, employee.birthdate());
+        preparedStatement.setString(6, employee.position());
+        preparedStatement.setString(7, employee.department());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
         System.out.println("Employee added successfully.");
     }
 
-    public void assignEmployeeForProject(Scanner scanner) throws SQLException {
+    public void assignEmployeeToProject(Scanner scanner) throws SQLException {
         Statement st = this.con.createStatement();
         System.out.println("Enter employee national id");
         String nationalId = scanner.nextLine();
@@ -95,24 +133,10 @@ public class DatabaseUtil {
         String projectId = scanner.nextLine();
         st.execute("UPDATE darbuotojas SET projektas_id=" + projectId + " WHERE asmenskodas=" + nationalId);
         System.out.println("Employee assigned successfully.");
+        st.close();
     }
     public void closeConnection() throws SQLException {
         this.con.close();
-    }
-    public ArrayList<Project> createNewProjectArrayFromFile(String filePath) throws FileNotFoundException {
-        File file = new File(filePath);
-        ArrayList<Project> projects = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] lineArr = line.split(";");
-                Project project = new Project(Integer.parseInt(lineArr[0]), lineArr[1]);
-                projects.add(project);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return projects;
     }
     public void addProjectsToDatabase(ArrayList<Project> projects) throws SQLException {
         con.setAutoCommit(false);
@@ -126,8 +150,10 @@ public class DatabaseUtil {
         } catch (SQLException e) {
             con.rollback();
             System.out.println("Error, projects has not been added");
+            System.out.println(e.getMessage());
+        } finally {
+            con.setAutoCommit(true);
         }
         con.commit();
-        con.setAutoCommit(true);
     }
 }

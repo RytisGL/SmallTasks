@@ -5,14 +5,14 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         DatabaseUtil con;
         try {
             con = new DatabaseUtil("jdbc:h2:~/test", "sa", "");
 
             boolean running = true;
-            Scanner scanner = new Scanner(System.in);
 
-            con.addProjectsToDatabase(con.createNewProjectArrayFromFile("test.txt"));
+            con.addProjectsToDatabase(Project.createNewProjectArrayFromFile("test.txt"));
 
             while (running) {
                 Commands.printCommands();
@@ -21,7 +21,7 @@ public class Main {
                     case ONE -> con.printEmployees();
                     case TWO -> con.printProject();
                     case THREE -> con.addNewEmployee(scanner);
-                    case FOUR -> con.assignEmployeeForProject(scanner);
+                    case FOUR -> con.assignEmployeeToProject(scanner);
                     case FIVE -> {
                         con.closeConnection();
                         scanner.close();
@@ -32,10 +32,10 @@ public class Main {
                 }
 
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (NullPointerException | SQLException ex) {
+            System.out.println(ex.getMessage());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-        }
+            }
     }
 }
