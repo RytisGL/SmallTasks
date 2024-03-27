@@ -31,7 +31,7 @@ public class Main {
                 }
 
             }
-        } catch (NullPointerException | SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (IOException ex) {
             throw new RuntimeException(ex.getMessage());

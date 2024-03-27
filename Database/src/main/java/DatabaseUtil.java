@@ -97,31 +97,23 @@ public class DatabaseUtil {
 
 
     public void addNewEmployee(Scanner scanner) throws SQLException {
-        System.out.println("Enter national id");
-        int nationalId = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter name");
-        String name = scanner.nextLine();
-        System.out.println("Enter lastname");
-        String lastname = scanner.nextLine();
-        System.out.println("Enter starting date (yyyy-mm-dd)");
-        Date startingDate = Date.valueOf(scanner.nextLine());
-        System.out.println("Enter birthdate (yyyy-mm-dd)");
-        Date bDay = Date.valueOf(scanner.nextLine());
-        System.out.println("Enter position");
-        String position = scanner.nextLine();
-        System.out.println("Enter department");
-        String department = scanner.nextLine();
-
         String sql = "INSERT INTO darbuotojas (asmenskodas, vardas, pavarde, dirbanuo, gimimometai, pareigos, skyrius_pavadinimas) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = this.con.prepareStatement(sql)) {
-            preparedStatement.setInt(1, nationalId);
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, lastname);
-            preparedStatement.setDate(4, startingDate);
-            preparedStatement.setDate(5, bDay);
-            preparedStatement.setString(6, position);
-            preparedStatement.setString(7, department);
+            System.out.println("Enter national id");
+            preparedStatement.setInt(1, Integer.parseInt(scanner.nextLine()));
+            System.out.println("Enter name");
+            preparedStatement.setString(2, scanner.nextLine());
+            System.out.println("Enter lastname");
+            preparedStatement.setString(3, scanner.nextLine());
+            System.out.println("Enter starting date (yyyy-mm-dd)");
+            preparedStatement.setDate(4, Date.valueOf(scanner.nextLine()));
+            System.out.println("Enter birthdate (yyyy-mm-dd)");
+            preparedStatement.setDate(5, Date.valueOf(scanner.nextLine()));
+            System.out.println("Enter position");
+            preparedStatement.setString(6, scanner.nextLine());
+            System.out.println("Enter department");
+            preparedStatement.setString(7, scanner.nextLine());
             preparedStatement.executeUpdate();
         }
         System.out.println("Employee added successfully.");
