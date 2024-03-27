@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -172,6 +174,16 @@ public class DatabaseUtil {
         } finally {
             con.setAutoCommit(true);
         }
-        con.commit();
+    }
+
+    public void createProjectsFromFile(Scanner scanner) throws IOException, SQLException {
+        System.out.println("Type file path");
+        String filePath = scanner.nextLine();
+        File file = new File(filePath);
+        if (file.exists()) {
+            this.addProjectsToDatabase(Project.createNewProjectArrayFromFile(filePath));
+        } else {
+            System.out.println("File does not exist");
+        }
     }
 }

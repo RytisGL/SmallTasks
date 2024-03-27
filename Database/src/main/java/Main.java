@@ -1,4 +1,4 @@
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -6,24 +6,23 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        DatabaseUtil con;
+        DatabaseUtil databaseConnection;
         try {
-            con = new DatabaseUtil("jdbc:h2:~/test", "sa", "");
+            databaseConnection = new DatabaseUtil("jdbc:h2:~/test", "sa", "");
 
             boolean running = true;
-
-            con.addProjectsToDatabase(Project.createNewProjectArrayFromFile("test.txt"));
 
             while (running) {
                 Commands.printCommands();
                 Commands selection = Commands.stringToCommand(scanner.nextLine());
                 switch (selection) {
-                    case ONE -> con.printEmployees();
-                    case TWO -> con.printProject();
-                    case THREE -> con.addNewEmployee(scanner);
-                    case FOUR -> con.assignEmployeeToProject(scanner);
-                    case FIVE -> {
-                        con.closeConnection();
+                    case ONE -> databaseConnection.printEmployees();
+                    case TWO -> databaseConnection.printProject();
+                    case THREE -> databaseConnection.addNewEmployee(scanner);
+                    case FOUR -> databaseConnection.assignEmployeeToProject(scanner);
+                    case FIVE -> databaseConnection.createProjectsFromFile(scanner);
+                    case SIX -> {
+                        databaseConnection.closeConnection();
                         scanner.close();
                         running = false;
                     }
@@ -32,10 +31,10 @@ public class Main {
                 }
 
             }
-        } catch (NullPointerException | SQLException ex) {
-            System.out.println(ex.getMessage());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-            }
+        } catch (NullPointerException | SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 }
