@@ -8,74 +8,89 @@ public class DatabaseUtil {
     public DatabaseUtil(String url, String user, String password) throws SQLException {
         this.con = DriverManager.getConnection(url, user, password);
     }
+
     public void printEmployees() throws SQLException {
-        Statement st = this.con.createStatement();
-        st.execute("SELECT * FROM darbuotojas");
-        ResultSet rs = st.getResultSet();
-        String header = String.format("|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|",
-                "Asmens Kodas",
-                "Vardas",
-                "Pavarde",
-                "Dirbanuo",
-                "Gimimo Metai",
-                "Pareigos",
-                "Skyriaus Pavadinimas",
-                "Projektas ID");
-        System.out.println(header);
-        System.out.println("-".repeat(header.length()));
-        while (rs.next()) {
-            System.out.printf("|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%n",
-                    rs.getString("asmenskodas"),
-                    rs.getString("vardas"),
-                    rs.getString("pavarde"),
-                    rs.getString("dirbanuo"),
-                    rs.getString("gimimometai"),
-                    rs.getString("pareigos"),
-                    rs.getString("skyrius_pavadinimas"),
-                    rs.getString("projektas_id"));
+        ResultSet rs = null;
+        try (Statement st = this.con.createStatement()) {
+            st.execute("SELECT * FROM darbuotojas");
+            rs = st.getResultSet();
+            String header = String.format("|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|",
+                    "Asmens Kodas",
+                    "Vardas",
+                    "Pavarde",
+                    "Dirbanuo",
+                    "Gimimo Metai",
+                    "Pareigos",
+                    "Skyriaus Pavadinimas",
+                    "Projektas ID");
+            System.out.println(header);
             System.out.println("-".repeat(header.length()));
+            while (rs.next()) {
+                System.out.printf("|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%-20s|%n",
+                        rs.getString("asmenskodas"),
+                        rs.getString("vardas"),
+                        rs.getString("pavarde"),
+                        rs.getString("dirbanuo"),
+                        rs.getString("gimimometai"),
+                        rs.getString("pareigos"),
+                        rs.getString("skyrius_pavadinimas"),
+                        rs.getString("projektas_id"));
+                System.out.println("-".repeat(header.length()));
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
         }
-        rs.close();
-        st.close();
     }
+
     public ArrayList<Employee> getEmployeeArrayFromDatabase() throws SQLException {
-        Statement st = this.con.createStatement();
-        st.execute("SELECT * FROM darbuotojas");
-        ResultSet rs = st.getResultSet();
+        ResultSet rs = null;
         ArrayList<Employee> employeeArrayList = new ArrayList<>();
-        while (rs.next()) {
-                    Integer nationalId = rs.getInt("asmenskodas");
-                    String name = rs.getString("vardas");
-                    String lastname = rs.getString("pavarde");
-                    Date startingFrom = rs.getDate("dirbanuo");
-                    Date birthday = rs.getDate("gimimometai");
-                    String position = rs.getString("pareigos");
-                    String department = rs.getString("skyrius_pavadinimas");
-                    Integer projectId = rs.getInt("projektas_id");
-                    employeeArrayList.add(new Employee(nationalId,name,lastname,startingFrom,birthday,position,department,projectId));
+        try (Statement st = this.con.createStatement()) {
+            st.execute("SELECT * FROM darbuotojas");
+            rs = st.getResultSet();
+            while (rs.next()) {
+                Integer nationalId = rs.getInt("asmenskodas");
+                String name = rs.getString("vardas");
+                String lastname = rs.getString("pavarde");
+                Date startingFrom = rs.getDate("dirbanuo");
+                Date birthday = rs.getDate("gimimometai");
+                String position = rs.getString("pareigos");
+                String department = rs.getString("skyrius_pavadinimas");
+                Integer projectId = rs.getInt("projektas_id");
+                employeeArrayList.add(new Employee(nationalId, name, lastname, startingFrom, birthday, position, department, projectId));
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
         }
-        rs.close();
-        st.close();
         return employeeArrayList;
     }
 
     public void printProject() throws SQLException {
-        Statement st = this.con.createStatement();
-        st.execute("SELECT projektas.pavadinimas, darbuotojas.vardas, darbuotojas.pavarde FROM projektas JOIN darbuotojas ON projektas.id = darbuotojas.projektas_id;");
-        ResultSet rs = st.getResultSet();
-        String header = String.format("%-20s|%-20s|%-20s|",
-                "Projektas", "Vardas", "Pavarde");
-        System.out.println(header);
-        System.out.println("-".repeat(header.length()));
-        while (rs.next()) {
-            System.out.printf("%-20s|%-20s|%-20s|%n",
-                    rs.getString("pavadinimas"),
-                    rs.getString("vardas"),
-                    rs.getString("pavarde"));
+        ResultSet rs = null;
+        try (Statement st = this.con.createStatement()) {
+            st.execute("SELECT projektas.pavadinimas, darbuotojas.vardas, darbuotojas.pavarde FROM projektas JOIN darbuotojas ON projektas.id = darbuotojas.projektas_id;");
+            rs = st.getResultSet();
+            String header = String.format("%-20s|%-20s|%-20s|",
+                    "Projektas", "Vardas", "Pavarde");
+            System.out.println(header);
             System.out.println("-".repeat(header.length()));
+            while (rs.next()) {
+                System.out.printf("%-20s|%-20s|%-20s|%n",
+                        rs.getString("pavadinimas"),
+                        rs.getString("vardas"),
+                        rs.getString("pavarde"));
+                System.out.println("-".repeat(header.length()));
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
         }
-        rs.close();
-        st.close();
+
     }
 
 
@@ -97,47 +112,50 @@ public class DatabaseUtil {
 
         String sql = "INSERT INTO darbuotojas (asmenskodas, vardas, pavarde, dirbanuo, gimimometai, pareigos, skyrius_pavadinimas) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement = this.con.prepareStatement(sql);
-        preparedStatement.setInt(1, nationalId);
-        preparedStatement.setString(2, name);
-        preparedStatement.setString(3, lastname);
-        preparedStatement.setDate(4, startingDate);
-        preparedStatement.setDate(5, bDay);
-        preparedStatement.setString(6, position);
-        preparedStatement.setString(7, department);
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+        try (PreparedStatement preparedStatement = this.con.prepareStatement(sql)) {
+            preparedStatement.setInt(1, nationalId);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, lastname);
+            preparedStatement.setDate(4, startingDate);
+            preparedStatement.setDate(5, bDay);
+            preparedStatement.setString(6, position);
+            preparedStatement.setString(7, department);
+            preparedStatement.executeUpdate();
+        }
         System.out.println("Employee added successfully.");
     }
+
     public void addNewEmployeeFromEmployeeObject(Employee employee) throws SQLException {
         String sql = "INSERT INTO darbuotojas (asmenskodas, vardas, pavarde, dirbanuo, gimimometai, pareigos, skyrius_pavadinimas) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement = this.con.prepareStatement(sql);
-        preparedStatement.setInt(1, employee.nationalId());
-        preparedStatement.setString(2, employee.name());
-        preparedStatement.setString(3, employee.lastname());
-        preparedStatement.setDate(4, employee.workingFrom());
-        preparedStatement.setDate(5, employee.birthdate());
-        preparedStatement.setString(6, employee.position());
-        preparedStatement.setString(7, employee.department());
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+        try (PreparedStatement preparedStatement = this.con.prepareStatement(sql)) {
+            preparedStatement.setInt(1, employee.nationalId());
+            preparedStatement.setString(2, employee.name());
+            preparedStatement.setString(3, employee.lastname());
+            preparedStatement.setDate(4, employee.workingFrom());
+            preparedStatement.setDate(5, employee.birthdate());
+            preparedStatement.setString(6, employee.position());
+            preparedStatement.setString(7, employee.department());
+            preparedStatement.executeUpdate();
+        }
         System.out.println("Employee added successfully.");
     }
 
     public void assignEmployeeToProject(Scanner scanner) throws SQLException {
-        Statement st = this.con.createStatement();
-        System.out.println("Enter employee national id");
-        String nationalId = scanner.nextLine();
-        System.out.println("Enter assigned project id");
-        String projectId = scanner.nextLine();
-        st.execute("UPDATE darbuotojas SET projektas_id=" + projectId + " WHERE asmenskodas=" + nationalId);
-        System.out.println("Employee assigned successfully.");
-        st.close();
+        try (Statement st = this.con.createStatement()) {
+            System.out.println("Enter employee national id");
+            String nationalId = scanner.nextLine();
+            System.out.println("Enter assigned project id");
+            String projectId = scanner.nextLine();
+            st.execute("UPDATE darbuotojas SET projektas_id=" + projectId + " WHERE asmenskodas=" + nationalId);
+            System.out.println("Employee assigned successfully.");
+        }
     }
+
     public void closeConnection() throws SQLException {
         this.con.close();
     }
+
     public void addProjectsToDatabase(ArrayList<Project> projects) throws SQLException {
         con.setAutoCommit(false);
         String sql = "INSERT INTO projektas (id, pavadinimas) VALUES (?,?)";
